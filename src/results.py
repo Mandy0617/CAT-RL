@@ -7,7 +7,7 @@ from PIL import Image, ImageOps, ImageDraw, ImageFont
 
 class Results:
   
-    def __init__(self, map_name, exp_number, baseline_included = True):
+    def __init__(self, map_name, exp_number, baseline_included): #baseline_included = True?
         self._experiment_number = exp_number
         self._data_abs = []
         self._data_baseline = []
@@ -15,10 +15,13 @@ class Results:
         path_abs = os.getcwd() + '/results/' + map_name + '_'
         path_base = os.getcwd() + '/results/' + "base_" + map_name + '_'
 
+
         for i in range (1,self._experiment_number + 1):
 
             with open(path_abs + str(i), "rb") as file_name:
+                print(file_name)
                 self._data_abs.append( pk.load(file_name) )
+                print(type(self._data_abs[0]))
             if baseline_included:
                 with open(path_base + str(i), "rb") as file_name:
                     self._data_baseline.append (pk.load(file_name))
@@ -415,7 +418,11 @@ class Results:
 
 
 def main():
-    res = Results("grid_64x64_map1_adrl", exp_number = 1, baseline_included = False)
+    # res = Results("grid_64x64_map1_adrl", exp_number = 1, baseline_included = False)
+    res = Results("grid_32x32_map1_adrl", exp_number = 1, baseline_included = False)
+
+    # res = Results("water_200x200_adrl", exp_number = 1, baseline_included = False)
+
     #res.compare_bound("success rate", 40)
     res.show_abstraction_result(1)
 

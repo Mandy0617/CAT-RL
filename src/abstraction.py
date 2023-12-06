@@ -25,6 +25,8 @@ class Abstraction:
         self._agent = agent
         self._root_name = self.split_to_abs_state(self._state_ranges)
         self._tree = Abstraction_Tree (root_split = self._split, root_abs_state = self._root_name)
+        # print(self._tree)
+
         self.initialize_tree()
         self.update_n_abstract_state ()
         if hyper_param.bootstrap == 'from_concrete': self.update_abstract_maze ()
@@ -48,11 +50,13 @@ class Abstraction:
 
     def initialize_abstraction(self):
         for i in range (self._n_states):
+            # print(self._state_ranges)
             midpoint = (self._state_ranges[i][1] - self._state_ranges[i][0])/2 + self._state_ranges[i][0]
             if not midpoint - int(midpoint) == 0: midpoint = math.ceil(midpoint)
             min_value = self._state_ranges[i][0]
             max_value = self._state_ranges[i][1]
             self._split.append ([min_value, int(midpoint), max_value])
+            # print(self._split)
       
     def split_to_all_state_values (self, split):
         state_values = []
@@ -90,8 +94,11 @@ class Abstraction:
         return indices
     
     def state(self, state_con):
+        # print(state_con)
+
         try:
             state_abstract = self.state_recursive(state_con, self._tree._root) 
+            # print(state_abstract)
         except Exception as e:
             print(str(e))
             print("abstract state not in CAT")
@@ -118,12 +125,22 @@ class Abstraction:
     def state_recursive(self, state_con, start_node):
         found = False
         result = None
-        abstract_state = self.con_state_to_abs (state_con, start_node._split)   
+
+        # print(state_con)
+
+        abstract_state = self.con_state_to_abs (state_con, start_node._split)
+        # print(f"start_node._split: {start_node._split}")   
+
+        # print(abstract_state) 
+          
         flag = False
+
         for n in start_node._child:
             if abstract_state == n._state:
                 flag = True
                 temp_node = n
+                # print(temp_node)
+                # print(len(n._child))
                 if len(n._child) == 0:
                     found = True 
                     result = abstract_state
@@ -134,13 +151,27 @@ class Abstraction:
             return self.state_recursive(state_con, temp_node)
 
     def con_state_to_abs (self, state_con, split):
+        # print(f"split: {state_con}")
+        print(f"state_con: {state_con}")
+
+        # print(len(state_con))
         state = []
         for i in range(len(state_con)):
             for j in range (len(split[i]) -1):
-                if state_con[i] >= split[i][j] and state_con[i] < split[i][j+1]:
+                # print(type(split))
+                print(f"split[{i}]: {split[i]}")
+                # if state_con[i] >= split[i][j] and state_con[i] < split[i][j+1]:
+                if state_con[i] >= split[i][j] and state_con[i] <= split[i][j+1]:
+
                     state.append(str(split[i][j]) + ',' + str(split[i][j+1]) )
                     break
         state = tuple(state)
+
+        print(f"state:  {state}")
+
+        # print(len(state))
+        # print(len(state_con))
+
         if len(state) == len(state_con): return state
         else: return None  
 

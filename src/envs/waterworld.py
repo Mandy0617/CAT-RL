@@ -51,8 +51,8 @@ class WaterWorldBall:
     def __init__(self, color, radius, loc, vel):
         self.color = color
         self.radius = radius
-        self.loc = np.array(loc, dtype=np.float)
-        self.vel = np.array(vel, dtype=np.float)
+        self.loc = np.array(loc, dtype=float)
+        self.vel = np.array(vel, dtype=float)
 
     def update_loc(self, max_x, max_y, elapsedTime):
         self.loc = self.loc + elapsedTime * self.vel

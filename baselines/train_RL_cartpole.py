@@ -8,6 +8,7 @@ import torch
 import csv
 import tqdm
 import sys
+sys.path.append('baselines/stable-baselines3')
 
 from stable_baselines3.common.callbacks import CallbackList, EvalCallback
 from stable_baselines3.common.vec_env import SubprocVecEnv

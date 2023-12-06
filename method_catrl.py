@@ -15,7 +15,7 @@ from src.envs.wumpusworld import *
 from src.envs.mountaincar import *
 from src.learning import *
 
-def evaluate(i, agent):
+def evaluate(i, agent): #i is the index of episode
     if (i % test_abs_every == 0 and i>0):
         total_reward_list = []
         for j in range (10):
@@ -40,7 +40,7 @@ def evaluate(i, agent):
                     if state == new_state or done:
                         break
                     state = new_state
-                agent.update_qtable (new_state_abs)
+                agent.update_qtable (new_state_abs) # Updates the Q-table with the final abstract state reached in the episode.
                 new_action = agent.policy(new_state_abs)
                 state = new_state
                 state_abs = new_state_abs
@@ -60,6 +60,8 @@ abstraction_colors = dict()
 best_actions = dict()
 
 for trial in range (1,2):
+# for trial in range (1,11):
+
     # ____________ main Parameters ___________________________
     seed = 13*trial
     random.seed(seed)
@@ -73,7 +75,7 @@ for trial in range (1,2):
     # env.seed(seed)
     #_________________________________________________________
     start_time = time.time()
-    succ = []
+    succ = [] # An empty list to store success rates.
     agent_abs_q = qlearning_abs(action_size = env._action_size)
     agent = agent_abs_q
     agent_con = qlearning (env, state_size = env._state_size, action_size = env._action_size)
@@ -105,13 +107,21 @@ for trial in range (1,2):
             new_state_abs = state_abs
             r = 0
             while new_state_abs == state_abs:
+                # print(env.step (action))
+
                 new_state, temp_r, done, success = env.step (action)
+                print(f"new_state: {new_state}")
                 new_state_abs = abstract.state (new_state)
                 agent.update_qtable (new_state_abs)
+                # If bootstrapping is enabled, the concrete agent (agent_con) selects a new action for the concrete environment, and training occurs.
                 if boot == 'from_concrete': new_action = agent_con.policy(new_state)
                 if boot == 'from_concrete': agent_con.train (state, new_state, action, new_action, temp_r)
                 r += temp_r
                 epoch += 1
+
+                # print(type(state))
+                # print(type(new_state))
+
                 if state == new_state or done:
                     break
                 state = new_state
