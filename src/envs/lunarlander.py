@@ -120,7 +120,15 @@ class LunarLander():
         # return np.array(state, dtype=np.float32), reward, terminated, False, {}
         # return next_state, reward, self.done, info
         # print(type(next_state))
-        return  next_state.tolist(), reward, self.done, self.success
+        refined_next_state = next_state.tolist()
+        for i in range(len(refined_next_state)):
+            if refined_next_state[i] > self._original_state_ranges[i][1]:
+                refined_next_state[i] = self._original_state_ranges[i][1]
+            if refined_next_state[i] < self._original_state_ranges[i][0]:
+                refined_next_state[i] = self._original_state_ranges[i][0]
+
+        return  refined_next_state, reward, self.done, self.success
+        # return  next_state.tolist(), reward, self.done, self.success
 
 
     def reset(self):

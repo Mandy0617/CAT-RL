@@ -110,7 +110,7 @@ for trial in range (1,2):
                 # print(env.step (action))
 
                 new_state, temp_r, done, success = env.step (action)
-                print(f"new_state: {new_state}")
+                # print(f"new_state: {new_state}")
                 new_state_abs = abstract.state (new_state)
                 agent.update_qtable (new_state_abs)
                 # If bootstrapping is enabled, the concrete agent (agent_con) selects a new action for the concrete environment, and training occurs.

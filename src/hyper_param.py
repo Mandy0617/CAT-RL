@@ -195,7 +195,7 @@ gamma = 0.95
 lam = 0.5
 k_cap = 1
 step_max = 500
-episode_max = 5000  
+episode_max = 10000 #5000  
 # # gridsize = (200,200) # (250,250) (300,300) (350,350) (400,400)
 map_name = "lunar_"
 

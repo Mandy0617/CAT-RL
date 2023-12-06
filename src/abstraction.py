@@ -136,6 +136,8 @@ class Abstraction:
         flag = False
 
         for n in start_node._child:
+            # print(f"n._state: {n._state}")
+            # print(f"abstract_state: {abstract_state}")
             if abstract_state == n._state:
                 flag = True
                 temp_node = n
@@ -152,14 +154,14 @@ class Abstraction:
 
     def con_state_to_abs (self, state_con, split):
         # print(f"split: {state_con}")
-        print(f"state_con: {state_con}")
+        # print(f"state_con: {state_con}")
 
         # print(len(state_con))
         state = []
         for i in range(len(state_con)):
             for j in range (len(split[i]) -1):
                 # print(type(split))
-                print(f"split[{i}]: {split[i]}")
+                # print(f"split[{i}]: {split[i]}")
                 # if state_con[i] >= split[i][j] and state_con[i] < split[i][j+1]:
                 if state_con[i] >= split[i][j] and state_con[i] <= split[i][j+1]:
 
@@ -167,7 +169,7 @@ class Abstraction:
                     break
         state = tuple(state)
 
-        print(f"state:  {state}")
+        # print(f"state:  {state}")
 
         # print(len(state))
         # print(len(state_con))
