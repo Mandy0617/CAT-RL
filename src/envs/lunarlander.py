@@ -95,7 +95,16 @@ class LunarLander():
         # next_state, reward, terminated, info = self.gym_env.step(action)
 
         # terminates when collides or is not awake i.e. lands
-        
+
+        # Clip each dimension of new_state independently
+        refined_next_state = np.clip(next_state, a_min=self.gym_env.observation_space.low, a_max=self.gym_env.observation_space.high)
+
+        info["done"] = self.done
+        info["succ"] = self.success
+        info["reward"] = self.total_reward
+        info["steps"] = self.steps
+        info["num_episodes"] = self.num_episodes
+
         self.steps += 1
         if self.steps == self.step_max:
             self.done = True
@@ -112,22 +121,16 @@ class LunarLander():
             self.num_episodes += 1
         self.total_reward += reward
 
-        info["done"] = self.done
-        info["succ"] = self.success
-        info["reward"] = self.total_reward
-        info["steps"] = self.steps
-        info["num_episodes"] = self.num_episodes
+        # info["done"] = self.done
+        # info["succ"] = self.success
+        # info["reward"] = self.total_reward
+        # info["steps"] = self.steps
+        # info["num_episodes"] = self.num_episodes
         # return np.array(state, dtype=np.float32), reward, terminated, False, {}
         # return next_state, reward, self.done, info
         # print(type(next_state))
-        refined_next_state = next_state.tolist()
-        for i in range(1,len(refined_next_state)-2):
-            if refined_next_state[i] > self._original_state_ranges[i][1]:
-                refined_next_state[i] = self._original_state_ranges[i][1]
-            if refined_next_state[i] < self._original_state_ranges[i][0]:
-                refined_next_state[i] = self._original_state_ranges[i][0]
 
-        return  refined_next_state, reward, self.done, self.success
+        return  refined_next_state.tolist(), reward, self.done, self.success
         # return  next_state.tolist(), reward, self.done, self.success
 
 
