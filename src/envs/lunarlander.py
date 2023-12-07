@@ -121,7 +121,7 @@ class LunarLander():
         # return next_state, reward, self.done, info
         # print(type(next_state))
         refined_next_state = next_state.tolist()
-        for i in range(len(refined_next_state)):
+        for i in range(1,len(refined_next_state)-2):
             if refined_next_state[i] > self._original_state_ranges[i][1]:
                 refined_next_state[i] = self._original_state_ranges[i][1]
             if refined_next_state[i] < self._original_state_ranges[i][0]:
