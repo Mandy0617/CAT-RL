@@ -8,6 +8,9 @@ t = False
 SMALL_SIZE = 8
 MEDIUM_SIZE = 10
 BIGGER_SIZE = 12
+# SMALL_SIZE = 16
+# MEDIUM_SIZE = 20
+# BIGGER_SIZE = 24
 plt.rc('font', size=MEDIUM_SIZE)          # controls default text sizes
 plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
 plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
@@ -122,20 +125,20 @@ if __name__=="__main__":
     # domain_names = ["officeworld","gridworld","taxiworld","waterworld","mountaincar"]
     # domain_names = ["officeworld","gridworld","mountaincar"]
 
-    domain_names = ["waterworld","mountaincar","cartpole"]
+    domain_names = ["waterworld","mountaincar","cartpole","lunar"]
 
     # titles = {"taxiworld": "Discrete \nTaxi World (30x30)", "gridworld": "Discrete\n Wumpus World (64x64)", "officeworld": "Discrete \nOffice World (36x36)", "waterworld": "Continuous \n Water World", "mountaincar": "Continuous \nMountain Car "}
 
-    titles = {"waterworld": "Continuous \n Water World","mountaincar": "Continuous \nMountain Car ", "cartpole":"Continuous \n Cart Pole"}
+    titles = {"waterworld": "Continuous \n Water World","mountaincar": "Continuous \nMountain Car ", "cartpole":"Continuous \n Cart Pole","lunar":"Continuous \n Lunar Lander"}
 
     # max_episodes = {"taxiworld": 20000, "gridworld": 5000, "officeworld": 3000, "waterworld": 10000, "mountaincar": 2000}
-    max_episodes = {"waterworld": 5000, "mountaincar": 2000, "cartpole": 10000}
+    max_episodes = {"waterworld": 5000, "mountaincar": 2500, "cartpole": 5000, "lunar":5000}
 
     # map_names = {"taxiworld": "taxi_30x30_map1", "gridworld": "grid_64x64_map1", "officeworld": "office_36x36_map1", "waterworld": "water_300x300_map1", "mountaincar": "mountaincar"}
 
     # map_names = {"taxiworld": "taxi_30x30_map1", "gridworld": "grid_64x64_map1", "officeworld": "office_36x36_map1", "waterworld": "water_200x200_map1", "mountaincar": "mountaincar"}
 
-    map_names = {"waterworld": "water_300x300_map1", "mountaincar": "mountaincar", "cartpole":"cartpole"}
+    map_names = {"waterworld": "water_300x300_map1", "mountaincar": "Mountain_Car", "cartpole":"cartpole", "lunar":"lunar"}
 
 
     methods = ['adrl','q','jirp','hrl',"dqn","a2c","ppo"]
@@ -147,12 +150,12 @@ if __name__=="__main__":
     colors = {'adrl': ['tab:green','tab:green'], 'q': ['tab:purple','tab:purple'], 'hrl': ['tab:cyan','tab:cyan'], 'jirp': ['tab:orange','tab:orange'], 'dqn': ['tab:red','tab:red'], 'a2c': ['tab:grey', 'tab:grey'], 'ppo': ['tab:blue','tab:blue']}
     # exp_numbers = {"officeworld":9,"gridworld":10,"taxiworld":10,"waterworld":10,"mountaincar":9}
 
-    exp_numbers = {"waterworld":1,"mountaincar":1,"cartpole":1}
+    exp_numbers = {"waterworld":1,"mountaincar":1,"cartpole":1,"lunar":1}
 
     
     param = "success" # rewards
 
-    fig,ax = plt.subplots(1,5,figsize =(10,1.75))
+    fig,ax = plt.subplots(1,4,figsize =(10,1.75)) #figsize =(10,1.75)
     legends = [False,False,True]
     for i,domain_name in enumerate(domain_names):
         print("\nDomain:",domain_name)
@@ -162,8 +165,8 @@ if __name__=="__main__":
             methods = methods_water
         if domain_name == "cartpole":
             methods = methods_water
-        if domain_name == "officeworld":
-            methods = methods_office
+        if domain_name == "lunar":
+            methods = methods_water
         lines,methods = draw(ax[i],domain_name,param,max_episodes[domain_name],map_names[domain_name],titles[domain_name],methods,colors,exp_numbers[domain_name])
         # if domain_name=="gridworld":
         #     lines_legend = lines
@@ -185,12 +188,15 @@ if __name__=="__main__":
 
             ax[i].set_xticks(x_ticks)
         if domain_name=="mountaincar":
-            x_ticks = [0,600,1300,2000]
+            x_ticks = [0,600,1300,2000,2700]
             ax[i].set_xticks(x_ticks)  
         if domain_name=="cartpole":
             # x_ticks = [0,3000,6000]
-            x_ticks = [0,3000,6000,9000]
-
+            x_ticks = [0,3000,6000]
+            ax[i].set_xticks(x_ticks) 
+        if domain_name=="lunar":
+            # x_ticks = [0,3000,6000]
+            x_ticks = [0,3000,6000]
             ax[i].set_xticks(x_ticks)    
 
         xticks = ax[i].get_xticks()
@@ -205,7 +211,7 @@ if __name__=="__main__":
 
     # method_names = ["CAT+RL (ours)", "Q-learning", "JIRP", "Option-critic", "DQN", "A2C", "PPO"]
     
-    method_names = ["CAT+RL", "Learning State + Q-learning"]
+    method_names = ["CAT+RL"]
 
     # fig.legend(lines_legend, method_names, loc='upper center',ncol = 7,bbox_to_anchor = (0.5,1.17))
     fig.legend( method_names, loc='upper center',ncol = 7,bbox_to_anchor = (0.5,1.17))

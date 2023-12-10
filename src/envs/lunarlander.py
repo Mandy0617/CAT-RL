@@ -26,6 +26,7 @@ class LunarLander():
         self._action_size = 4 #do nothing, fire left, orientation engine, fire main engine, fire right orientation engine
         self._state_size = 1
         self._n_state_variables = 8
+        self._gran = 0.001
 
 
         self.low = np.array(
@@ -65,7 +66,7 @@ class LunarLander():
         # print(self.high)
 
         # useful range is -1 .. +1, but spikes can be higher
-        self.observation_space = spaces.Box(self.low, self.high)
+        # self.observation_space = spaces.Box(self.low, self.high)
         self.action_space = spaces.Discrete(4)
 
         # self._original_state_ranges = [(-1.5, 1.5),(-1.5, 1.5),(-5.0, 5.0),(-5.0, 5.0),(-math.pi, math.pi),(-5.0, 5.0),(-0.0, 1.0),(-0.0, 1.0)]
@@ -76,8 +77,10 @@ class LunarLander():
         self._state_ranges = []
         for i in range (self._n_state_variables):
             # print(type(low[i]))
-            low = math.floor(self._original_state_ranges[i][0]) 
-            high = math.ceil(self._original_state_ranges[i][1]) + 1
+            # low = math.floor(self._original_state_ranges[i][0]) 
+            # high = math.ceil(self._original_state_ranges[i][1]) + 1
+            low = math.floor(self._original_state_ranges[i][0] * 1/self._gran) 
+            high = math.ceil(self._original_state_ranges[i][1] * 1/self._gran) + 1
             r = (low, high)
             self._state_ranges.append(r)
         
@@ -125,7 +128,7 @@ class LunarLander():
         # return next_state, reward, self.done, info
         # print(type(next_state))
 
-        return  refined_next_state.tolist(), reward, self.done, self.success
+        return  self.scale_state(refined_next_state.tolist()), reward, self.done, self.success
         # return  next_state.tolist(), reward, self.done, self.success
 
 
@@ -135,10 +138,14 @@ class LunarLander():
         self.done = False
         self.success = False 
         # print(self.gym_env.reset()[0].tolist())
-        return self.gym_env.reset()[0].tolist()
+        return self.scale_state(self.gym_env.reset()[0].tolist())
         # return self.gym_env.reset()
 
-    
+    def scale_state (self, state):
+        for i in range (len(state)-2):
+            # print (state[i])
+            state[i] = math.ceil(state[i] * 1/self._gran)
+        return state
 
 
     

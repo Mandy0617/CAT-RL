@@ -176,7 +176,7 @@ from src.envs.cartpole import *
 # lam = 0.5
 # k_cap = 1
 # step_max = 100
-# episode_max = 5000  #maybe change to 1000 for try? #original: 5000
+# episode_max = 3000  #maybe change to 1000 for try? #original: 5000
 # gridsize = (300,300) #(200,200) # (250,250) (300,300) (350,350) (400,400)
 # # map_name = "water_"+str(gridsize[0])+"x"+str(gridsize[1])
 
@@ -193,11 +193,11 @@ alpha = 0.05
 decay = 0.999
 gamma = 0.95
 lam = 0.5
-k_cap = 1
+k_cap = 2#1
 step_max = 500
-episode_max = 10000 #5000  
+episode_max = 20000 #5000  
 # # gridsize = (200,200) # (250,250) (300,300) (350,350) (400,400)
-map_name = "lunar_"
+map_name = "lunar"
 
 # # map_name = "lunar"+str(gridsize[0])+"x"+str(gridsize[1])+"_map1"
 
