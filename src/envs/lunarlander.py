@@ -102,6 +102,7 @@ class LunarLander():
         # Clip each dimension of new_state independently
         refined_next_state = np.clip(next_state, a_min=self.gym_env.observation_space.low, a_max=self.gym_env.observation_space.high)
 
+        print(f"refined_next_state: {refined_next_state}")
 
         self.steps += 1
         if self.steps == self.step_max:

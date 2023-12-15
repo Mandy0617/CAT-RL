@@ -169,41 +169,41 @@ from src.envs.cartpole import *
 
 # water domain 300 300
 
-# epsilon_min = 0.05
-# alpha = 0.05
-# decay = 0.999
-# gamma = 0.95
-# lam = 0.5
-# k_cap = 1
-# step_max = 100
-# episode_max = 3000  #maybe change to 1000 for try? #original: 5000
-# gridsize = (300,300) #(200,200) # (250,250) (300,300) (350,350) (400,400)
-# # map_name = "water_"+str(gridsize[0])+"x"+str(gridsize[1])
-
-# map_name = "water_"+str(gridsize[0])+"x"+str(gridsize[1])+"_map1"
-
-# env = WaterworldEnv(gridsize)
-# bootstrap = 'from_init' #guide program
-
-
-# Lunar land
-
 epsilon_min = 0.05
 alpha = 0.05
 decay = 0.999
 gamma = 0.95
 lam = 0.5
-k_cap = 2#1
-step_max = 500
-episode_max = 20000 #5000  
-# # gridsize = (200,200) # (250,250) (300,300) (350,350) (400,400)
-map_name = "lunar"
+k_cap = 1
+step_max = 100
+episode_max = 5000  #maybe change to 1000 for try? #original: 5000
+gridsize = (300,300) #(200,200) # (250,250) (300,300) (350,350) (400,400)
+# map_name = "water_"+str(gridsize[0])+"x"+str(gridsize[1])
 
-# # map_name = "lunar"+str(gridsize[0])+"x"+str(gridsize[1])+"_map1"
+map_name = "water_"+str(gridsize[0])+"x"+str(gridsize[1])+"_map1"
 
-env = LunarLander(step_max)
+env = WaterworldEnv(gridsize)
+bootstrap = 'from_init' #guide program
 
-bootstrap = 'from_init' 
+
+# Lunar land
+
+# epsilon_min = 0.05
+# alpha = 0.05
+# decay = 0.999
+# gamma = 0.95
+# lam = 0.5
+# k_cap = 2#1
+# step_max = 500
+# episode_max = 20000 #5000  
+# # # gridsize = (200,200) # (250,250) (300,300) (350,350) (400,400)
+# map_name = "lunar"
+
+# # # map_name = "lunar"+str(gridsize[0])+"x"+str(gridsize[1])+"_map1"
+
+# env = LunarLander(step_max)
+
+# bootstrap = 'from_init' 
 
 # cart pole
 
